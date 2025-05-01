@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import SearchIcon from "./search.svg"
-import MovieCard from './MovieCard';
+import PosterCard from './PosterCard';
 
 const API_URL = 'https://www.omdbapi.com/?i=tt3896198&apikey=1c39442'
 
@@ -38,7 +38,7 @@ searchMovie()
         <div className="container">
        
         {movies.map((movie)=>( 
-          <MovieCard movie={movie} />
+          <PosterCard movie={movie} />
         ))}
         </div>
         ):(
