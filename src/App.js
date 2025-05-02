@@ -30,8 +30,7 @@ function App() {
   };
 
   useEffect( ()=>{
-searchMovie()
-  },[])
+searchMovie("Superman")},[])
 
   return (
  <> 
