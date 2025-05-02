@@ -10,12 +10,23 @@ function App() {
 
   const [movies, setMovies] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const searchMovie = async (title)=>{
+     setLoading(true);
+    try {
+
     const response = await fetch (`${API_URL}&s=${title}`);
     const data = await response.json(); 
 
-    setMovies(data.Search);
+    setMovies(data.Search||[]);
+        } catch (error) {
+      console.error("Failed to fetch movies", error);
+      setMovies([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect( ()=>{
@@ -34,11 +45,15 @@ searchMovie()
 
           <img src={SearchIcon} alt="search" onClick={() => searchMovie(searchTerm)} />
         </div>
-        {movies?.length>0?(
+          {loading ? (
+          <div className="loading">
+            <h2>Loading...</h2>
+          </div>
+        ): movies?.length>0?(
         <div className="container">
        
         {movies.map((movie)=>( 
-          <PosterCard movie={movie} />
+          <PosterCard key={movie.imdbID} movie={movie} />
         ))}
         </div>
         ):(
